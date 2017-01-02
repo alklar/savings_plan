@@ -1,0 +1,63 @@
+Monthly Savings Plan
+========================================================
+author: Alexander Klar 
+date: January 2, 2017
+autosize: true
+transition: rotate
+<div align="right">
+<img src="Images\savings_plan.png" width=460 height=217>
+</div>
+
+The Idea
+========================================================
+
+Create a small application including a GUI, that calculates and visualizes the results (including final balance) of a monthly savings plan.
+
+The user can choose:
+- monthly amount to invest
+- duration (in years)
+- yearly returns in percent (interest, dividents, gains,...)
+- day on which the money is invested
+
+
+
+Simple Example
+========================================================
+30 years, 100 Euro, 1st of each month, annual return of 6 %:
+
+```{r code}
+paid <- 1200 # 12*100 Euro
+oneYear <- 1200 + 6.5 * 6 * 100 / 100
+totalBalance <- oneYear
+savingsDF <- data.frame(year = 1, ammountPaid = paid, totalBalance = totalBalance )
+for(i in 2:30){
+  paid <- paid + 1200
+  totalBalance <- totalBalance * (1 + 6/100) + oneYear
+  savingsDF[i,] <- c(i, paid, totalBalance) }
+head(savingsDF,2) # show first 2 entries
+```
+
+The Result
+========================================================
+
+```{r plot, fig.width=19}
+r <- barplot(savingsDF$totalBalance/1000, names.arg = savingsDF$year, main = "Total Balance in 1000 €", 
+             xlab = "Years", ylim = c(0, totalBalance/800), col = "blue")
+    lines(r, savingsDF$ammountPaid/1000, type = "h", col = "red", lwd = 4)
+```
+
+Try it!
+========================================================
+ 
+Here's the link: https://alklar.shinyapps.io/monthly_savings_plan/
+
+<div align="center">
+<img src="Images\savings_plan.png" width=552 height=260>
+</div>
+ 
+If you have comments or questions, reach out to me.
+
+The source code is available here: https://github.com/alklar/savings_plan 
+
+
+
